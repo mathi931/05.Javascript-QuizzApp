@@ -1,0 +1,69 @@
+* {
+	box-sizing: border-box;
+    color:#dee2e6;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	margin: 0;
+	background-image: url('./background.jpg');
+	background-size: cover;
+	background-position: center;
+}
+.quiz-container{
+    font-size: 3rem;
+    max-width: 50rem;
+    width: 100%;
+    
+}
+.question-container {
+    background-color:rgba(33, 37, 41, 0.4);
+    font-weight: 400;
+    padding: 1px 1rem;
+    border: none;
+}
+.options-list {
+    font-weight: 300;
+    margin-top: 5px;
+}
+.option{
+    border-bottom: 1px solid whitesmoke;
+}
+#option4{
+margin-bottom: 4px solid #adb5bd;
+
+}
+.option-even{
+background-color:rgba(33, 37, 41, 0.8) ;
+}
+.option-odd{
+background-color: rgba(173, 181, 189, 0.8);
+}
+.icons{
+    float: right;
+    margin: 5px 1rem 0 0;
+} 
+.option-text{
+    margin-left: 1rem;
+}
+.fa-times-circle{
+    background-color:rgba(33, 37, 41, 0.2);
+    color: red;
+    border-radius: 50%;
+}
+.fa-check-circle{
+    background-color:rgba(173, 181, 189, 0.2);
+    color: green;
+    border-radius: 50%;
+}
+.option-wrong{
+    opacity: 40%;
+}
+.option-correct{
+    font-weight: 400;
+}
