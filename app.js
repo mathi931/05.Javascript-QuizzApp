@@ -6,7 +6,8 @@ const quizData = [
         op2: "Stockholm",
         op3: "Oslo",
         op4: "Copenhagen",
-        correct: "Oslo"
+        correct: "Oslo",
+        asked: false
     },
     {
         id: 1,
@@ -15,7 +16,8 @@ const quizData = [
         op2: "1922",
         op3: "1996",
         op4: "1938",
-        correct: "1945"
+        correct: "1945",
+        asked: false
     },
     {
         id: 2,
@@ -24,7 +26,8 @@ const quizData = [
         op2: "5",
         op3: "7",
         op4: "1",
-        correct: "5"
+        correct: "5",
+        asked: false
     },
     {
         id: 3,
@@ -33,7 +36,8 @@ const quizData = [
         op2: "American Airlines and US Airways",
         op3: "Lufthansa and Germanwings",
         op4: "British Airways and Iberia",
-        correct: "American Airlines and US Airways"
+        correct: "American Airlines and US Airways",
+        asked: false
     },
     {
         id: 4,
@@ -42,10 +46,24 @@ const quizData = [
         op2: "Switzerland",
         op3: "The Netherlands",
         op4: "Finland",
-        correct: "Finland"
+        correct: "Finland",
+        asked: false
 
     }
 ] 
 const QuestionText =document.getElementById("questionText");
 const Options = document.getElementsByClassName("options");
 console.log(Options);
+
+//random number but nor the last
+function getRandomNumberNorLast(min, max, current) {
+	var next = Math.floor(Math.random() * (max - min)) + min;
+	if (current === next) {
+		next = getRandomNumberNorLast(min, max, count);
+	}
+	return next;}
+
+//Returns a random number between min (inclusive) and max (exclusive)
+function getRandomNumber(min,max){
+    return Math.random() * (max - min) + min;
+}
