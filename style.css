@@ -34,6 +34,9 @@ body {
 .option{
     border-bottom: 1px solid whitesmoke;
 }
+.option :hover{
+    color: burlywood;
+}
 #option4{
 margin-bottom: 4px solid #adb5bd;
 
