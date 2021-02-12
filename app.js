@@ -53,17 +53,45 @@ const quizData = [
 ] 
 const QuestionText =document.getElementById("questionText");
 const Options = document.getElementsByClassName("options");
-console.log(Options);
+let questionIndex = [];
 
-//random number but nor the last
-function getRandomNumberNorLast(min, max, current) {
+
+//screen loaded
+window.addEventListener('DOMContentLoaded', function(){
+    questionIndex.push(3);
+    loadQuiz();
+    console.log();
+});
+
+QuestionText.addEventListener('click', function(){
+    getRandomNumberNorRepeat(0, 5);
+} );
+
+
+//random number but nor repeat to the indexArray
+function getRandomNumberNorRepeat(min, max) {
+
 	var next = Math.floor(Math.random() * (max - min)) + min;
-	if (current === next) {
-		next = getRandomNumberNorLast(min, max, count);
-	}
-	return next;}
+    questionIndex.includes(next) ? getRandomNumberNorRepeat(min, max) :questionIndex.push(next);
+}
 
 //Returns a random number between min (inclusive) and max (exclusive)
 function getRandomNumber(min,max){
-    return Math.random() * (max - min) + min;
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
+//elements
+function loadQuiz(){
+    loadQuestion();
+    loadOptions();
+    console.log(questionIndex[questionIndex.length-1]);
+}
+function loadQuestion(){
+    QuestionText.innerHTML = quizData[questionIndex[questionIndex.length-1]].question;
+}
+function loadOptions(){
+    Options[0].children[0].innerHTML = quizData[questionIndex[questionIndex.length-1]].op1;
+    Options[1].children[0].innerHTML = quizData[questionIndex[questionIndex.length-1]].op2;
+    Options[2].children[0].innerHTML = quizData[questionIndex[questionIndex.length-1]].op3;
+    Options[3].children[0].innerHTML = quizData[questionIndex[questionIndex.length-1]].op4;
 }
