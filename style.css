@@ -33,6 +33,7 @@ body {
 }
 .option{
     border-bottom: 1px solid whitesmoke;
+    
 }
 .option :hover{
     color: burlywood;
