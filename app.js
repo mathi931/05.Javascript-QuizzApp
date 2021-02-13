@@ -53,25 +53,20 @@ const quizData = [
 ];
 const QuestionText = document.getElementById('questionText');
 const Options = document.getElementsByClassName('options');
+const Submit = document.getElementById("button-submit");
 let questionIndex = [];
+let lastI;
+
+//
 
 //screen loaded
 window.addEventListener('DOMContentLoaded', function () {
 	questionIndex.push(3);
 	loadQuiz();
 	console.log();
+
 });
 
-//clicked on option event
-function getClickedOption(){
-    Options.forEach((option) =>{
-        if(option.checked){
-            console.log(`${option} is checked`);
-        }
-    }
-
-    );
-}
 
 //random number but nor repeat to the indexArray
 function getRandomNumberNorRepeat(min, max) {
@@ -90,7 +85,7 @@ function getRandomNumber(min, max) {
 function loadQuiz() {
 	loadQuestion();
 	loadOptions();
-	console.log(questionIndex[questionIndex.length - 1]);
+	//console.log(questionIndex[questionIndex.length - 1]);
 }
 function loadQuestion() {
 	QuestionText.innerHTML =
@@ -106,7 +101,32 @@ function loadOptions() {
 	Options[3].children[0].innerHTML =
 		quizData[questionIndex[questionIndex.length - 1]].op4;
 }
+//selected options text
 function OptionIsSelected(option){
-    
-    return option.children[0].innerHTML;
+    console.log(option);
+	OptionClassChange(option);
+
+    //return option.children[0].innerHTML;
 }
+
+function OptionClassChange(option){
+	//first select
+	if (lastI === undefined){
+		option.classList.add("option-selected");
+		lastI = option.id;	
+	}
+	//select other option
+	else if (!option.className.includes("option-selected") && option.id !== lastI && option.id !== undefined) {
+		Options[lastI].classList.remove("option-selected");
+		option.classList.add("option-selected");
+		lastI = option.id;
+	}
+	else if (option.className.includes("option-selected") && option.id === lastI && option.id !== undefined) {
+		option.classList.remove("option-selected");
+		lastI = undefined;
+	}
+
+	//return option.classList;
+}
+//console.log(Options[lastI]);
+

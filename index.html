@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<!-- Created By CodingNepal - www.codingnepalweb.com -->
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -17,24 +15,27 @@
 	<body>
 		<div class="quiz-container">
 			<div class="question-container">
-				<span id="questionText">Where is Myanmar?</span>
+				<span id="questionText"></span>
 			</div>
 			<div class="options-list">
-				<div class="option-odd options" onclick="OptionIsSelected(this)">
-					<span class="option-correct option-text">In Antarctica</span>
-					<i></i>
+				<div class="option-odd options" id="0" onclick="OptionIsSelected(this)">
+					<span class="option option-text"></span>
+					<i class="icons"></i>
 				</div>
-				<div class="option-even options" onclick="OptionIsSelected(this)">
-					<span class="option-correct option-text">In Asia</span>
-                    <i></i>
+				<div class="option-even options" id="1" onclick="OptionIsSelected(this)">
+					<span class="option option-text"></span>
+                    <i class="icons"></i>
 				</div>
-				<div class="option-odd options" onclick="OptionIsSelected(this)">
-					<span class="option-correct option-text">In Africa</span>
-                    <i></i>
+				<div class="option-odd options" id="2" onclick="OptionIsSelected(this)">
+					<span class="option  option-correct option-text"></span>
+                    <i class="icons"></i></i>
 				</div>
-				<div class="option-even options" onclick="OptionIsSelected(this)">
-					<span class="option-wrong option-text">On the Moon</span>
-                    <i></i>
+				<div class="option-even options option-last" id="3" onclick="OptionIsSelected(this)">
+					<span class="option option-text"></span>
+					<i class="icons"></i>
+				</div>
+				<div class="button-container">
+					<button id="button-submit">Submit</button>
 				</div>
 			</div>
 		</div>

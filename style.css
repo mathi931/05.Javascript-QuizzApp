@@ -1,7 +1,7 @@
 * {
 	box-sizing: border-box;
-    color:#dee2e6;
-    font-family: 'Roboto', sans-serif;
+	color: #f48c06;
+	font-family: 'Roboto', sans-serif;
 }
 
 body {
@@ -15,59 +15,94 @@ body {
 	background-size: cover;
 	background-position: center;
 }
-.quiz-container{
-    font-size: 3rem;
-    max-width: 50rem;
-    width: 100%;
-    
+.quiz-container {
+	font-size: 3rem;
+	max-width: 50rem;
+	width: 100%;
 }
 .question-container {
-    background-color:rgba(33, 37, 41, 0.4);
-    font-weight: 400;
-    padding: 1px 1rem;
-    border: none;
-}
-.options-list {
-    font-weight: 300;
-    margin-top: 5px;
-}
-.option{
-    border-bottom: 1px solid whitesmoke;
-    
-}
-.option :hover{
-    color: burlywood;
-}
-#option4{
-margin-bottom: 4px solid #adb5bd;
+	background-color: rgba(33, 37, 41, 0.2);
+	font-weight: 400;
+	padding: 1px 1rem;
+	border: none;
+    text-align: center;
+    border: 1px solid rgba(255, 186, 8, 0.2);
 
 }
-.option-even{
-background-color:rgba(33, 37, 41, 0.8) ;
+.options-list {
+	font-weight: 300;
+    margin-top: -1px;
+	cursor: pointer;  
 }
-.option-odd{
-background-color: rgba(173, 181, 189, 0.8);
+
+.options-list .options{
+    border: 1px solid rgba(255, 186, 8, 0.2);
+	border-bottom: 1px solid rgba(255, 186, 8, 0.7);
+    transition: transform .1s;
 }
-.icons{
-    float: right;
-    margin: 5px 3px 0 0;
-} 
-.option-text{
-    margin-left: 1rem;
-}
-.fa-times-circle{
-    background-color:rgba(33, 37, 41, 0.2);
-    color: red;
-    border-radius: 50%;
-}
-.fa-check-circle{
-    background-color:rgba(173, 181, 189, 0.2);
-    color: green;
-    border-radius: 50%;
-}
-.option-wrong{
-    opacity: 40%;
-}
-.option-correct{
+
+.options-list .options:hover{
+    border: 3px solid rgba(255, 186, 8, 0.7);
+    color: #faa307;
     font-weight: 400;
+    transform: scale(1.02);
+    font-size: 3.1rem;
+    opacity: 100%;
+}
+.options-list .option-selected{
+    border: 3px solid rgba(255, 186, 8, 0.7);
+    color: #faa307;
+    font-weight: 400;
+    transform: scale(1.02);
+    font-size: 3.1rem;
+    opacity: 100%;
+}
+.option-even {
+	background-color: rgba(33, 37, 41, 0.3);
+}
+.option-even:hover {
+	background-color: rgba(33, 37, 41, 0.5);
+}
+.option-odd {
+	background-color: rgba(33, 37, 41, 0.8);
+}
+.option-odd:hover{
+    background-color: rgba(33, 37, 41, 0.9);
+}
+.icons {
+	float: right;
+	margin: 5px 3px 0 0;
+}
+.option-text {
+	margin-left: 1rem;
+}
+.fa-times {
+	color: red;
+}
+.fa-check {
+	color: green;
+    font-size: 2rem;
+}
+.option-wrong .option{
+	opacity: 40%;
+}
+.option-correct .option{
+	font-weight: 400;
+    margin-left: 2rem;
+}
+#button-submit{
+    font-size: 3rem;
+    width:50rem;
+    margin-top: -1px;
+    background-color: rgba(33, 37, 41, 0.6);
+    border: none;
+    transition: transform .1s;
+    border: 1px solid rgba(255, 186, 8, 0.2);
+    cursor: pointer;
+}
+#button-submit:hover{
+    background-color: rgba(33, 37, 41, 0.9);
+    color: #faa307;
+    border: 3px solid rgba(255, 186, 8, 0.6);
+    transform: scale(1.01);
 }
