@@ -17,7 +17,7 @@ body {
 }
 .quiz-container {
 	font-size: 3rem;
-	max-width: 50rem;
+	max-width: 60rem;
 	width: 100%;
 }
 .question-container {
@@ -92,13 +92,14 @@ body {
 }
 #button-submit{
     font-size: 3rem;
-    width:50rem;
+    width:60rem;
     margin-top: -1px;
     background-color: rgba(33, 37, 41, 0.6);
     border: none;
     transition: transform .1s;
     border: 1px solid rgba(255, 186, 8, 0.2);
     cursor: pointer;
+    outline: none;
 }
 #button-submit:hover{
     background-color: rgba(33, 37, 41, 0.9);
