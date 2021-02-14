@@ -65,7 +65,7 @@ let optionI;
 // selected option element
 let currentOptionElement;
 //timer
-let timeLeft;
+var timeLeft;
 
 //Submit Button Click Event
 Submit.addEventListener("click", function(){
@@ -75,7 +75,7 @@ Submit.addEventListener("click", function(){
 		if (optionI !== undefined) {	
 
 			//2.check if it is a correct answer
-			if (GetAnswerResult() && questionIndex.length < 5) {
+			if (GetAnswerResult() && questionIndex.length <= 5) {
 				//correct answer -> set icon, and hinghlight
 				ShowIcons(true);
 				HighlightCorrect(true);
@@ -91,15 +91,13 @@ Submit.addEventListener("click", function(){
 			}
 			//last question so switch to results
 			else{
-				ShowIcons(false);
-				HighlightCorrect(false);
+				// ShowIcons(false);
+				// HighlightCorrect(false);
 				//print result
-				alert("DONE");
-				window.location = 'result.html';
+				//alert("DONE");
+				//window.location = 'result.html';
 			}
-			
-			
-			
+			optionI = undefined;
 		}
 		else {
 			alert("You must select an option first!");
@@ -128,6 +126,7 @@ window.addEventListener('DOMContentLoaded', function () {
 	if (window.location.href == "http://127.0.0.1:5500/index.html") {
 		questionIndex.push(GetRandomNumber(0,5));
 		loadQuiz();
+		CountDown(true, 6);
 	}
 	else if (window.location.href == "http://127.0.0.1:5500/result.html") {
 		
@@ -216,17 +215,24 @@ function ResetClasses() {
 	}
 }
 
-//countdown function
-function CountDown(timeleft){
+//countdown function // checks if its a question or beforeload
+function CountDown(question, timeleft){
     var downloadTimer = setInterval(function(){
     timeleft--;
     TimerContainer.children[0].textContent = timeleft;
-    if(timeleft == 0)
-        clearInterval(downloadTimer);
-		if (TimerContainer.children[0].textContent == 0) {
-			TimerContainer.children[0].textContent = "";
+    if(timeleft == 0){
+		//countdown while asking a question
+		if (question) {
+			clearInterval(downloadTimer);
+			if (TimerContainer.children[0].textContent == 0) {
+				TimerContainer.children[0].textContent = "";
+			}
 		}
-    },1000);
+		else{
+
+		}
+
+    }},1000);
 }
 //Get functions
 function GetAnswerResult(){
