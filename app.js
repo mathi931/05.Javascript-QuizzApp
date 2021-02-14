@@ -52,11 +52,11 @@ const quizData = [
 		asked: false,
 	},
 ];
-
 //elements
 const QuestionText = document.getElementById('questionText');
 const Options = document.getElementsByClassName('options');
 const Submit = document.getElementById("button-submit");
+const TimerContainer = document.querySelector('.timer-container');
 
 // an array what helps to follow the index of the questions. The last value is the current questions ID
 const questionIndex = [];
@@ -64,7 +64,8 @@ const questionIndex = [];
 let optionI;
 // selected option element
 let currentOptionElement;
-
+//timer
+let timeLeft;
 
 //Submit Button Click Event
 Submit.addEventListener("click", function(){
@@ -90,6 +91,9 @@ Submit.addEventListener("click", function(){
 			}
 			//last question so switch to results
 			else{
+				ShowIcons(false);
+				HighlightCorrect(false);
+				//print result
 				alert("DONE");
 				window.location = 'result.html';
 			}
@@ -212,7 +216,18 @@ function ResetClasses() {
 	}
 }
 
-
+//countdown function
+function CountDown(timeleft){
+    var downloadTimer = setInterval(function(){
+    timeleft--;
+    TimerContainer.children[0].textContent = timeleft;
+    if(timeleft == 0)
+        clearInterval(downloadTimer);
+		if (TimerContainer.children[0].textContent == 0) {
+			TimerContainer.children[0].textContent = "";
+		}
+    },1000);
+}
 //Get functions
 function GetAnswerResult(){
 	return currentOptionElement.innerText === quizData[questionIndex[questionIndex.length-1]].correct ? true : false;
