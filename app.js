@@ -65,7 +65,9 @@ let optionI;
 // selected option element
 let currentOptionElement;
 //timer
-var timeLeft;
+let timeLeft = 0;
+
+let quizTimer;
 
 //Submit Button Click Event
 Submit.addEventListener("click", function(){
@@ -75,28 +77,40 @@ Submit.addEventListener("click", function(){
 		if (optionI !== undefined) {	
 
 			//2.check if it is a correct answer
-			if (GetAnswerResult() && questionIndex.length <= 5) {
+			if (GetAnswerResult()) {
 				//correct answer -> set icon, and hinghlight
 				ShowIcons(true);
 				HighlightCorrect(true);
+				//if its not the last question loop again
+				if(questionIndex.length < 5){
+					CountDown(false);
+				}
+				//last question correct answer
+				else if(questionIndex.length === 5){
+					ShowIcons(true);
+					HighlightCorrect(true);
+					//goes to the last 5 seconds and hoes to results
+					CountDown(false,true,true);
+				}
+
 			}
 			else{
 				//false answer -> highlight correct answer, set icons
 				ShowIcons(false);
 				HighlightCorrect(false);
+				if(questionIndex.length < 5){
+					CountDown(false);
+				}
+				//last question wrong naswer
+				else if(questionIndex.length === 5){
+					ShowIcons(false);
+					HighlightCorrect(false);
+					//goes to the last 5 seconds and hoes to results
+					CountDown(false,true,true);
+				}
 			}
 			//4.change button Submit to Next question
-			if (questionIndex.length < 5) {
-				SwitchButton (false);
-			}
-			//last question so switch to results
-			else{
-				// ShowIcons(false);
-				// HighlightCorrect(false);
-				//print result
-				//alert("DONE");
-				//window.location = 'result.html';
-			}
+			questionIndex.length < 5 ? SwitchButton(true) : SwitchButton(false,true);
 			optionI = undefined;
 		}
 		else {
@@ -110,10 +124,14 @@ Submit.addEventListener("click", function(){
 		questionIndex.push(GetRandomNumberNorRepeat(0,5));
 		loadQuiz();
 		//6.button back to Submit
-		SwitchButton(true);
+		SwitchButton(false);
+		timeLeft =0;
 		ResetClasses();
+		CountDown(true);
 	}
-	
+	else if(Submit.innerHTML === "Result"){
+		alert("done");
+	}
 	else{
 		alert("Something is wrong bro");
 	}
@@ -126,7 +144,8 @@ window.addEventListener('DOMContentLoaded', function () {
 	if (window.location.href == "http://127.0.0.1:5500/index.html") {
 		questionIndex.push(GetRandomNumber(0,5));
 		loadQuiz();
-		CountDown(true, 6);
+		Submit.classList.add("after-nextQuestion");
+		CountDown(true);
 	}
 	else if (window.location.href == "http://127.0.0.1:5500/result.html") {
 		
@@ -184,8 +203,9 @@ function ShowIcons(correct){
 		currentOptionElement.children[1].classList.add("fas", "fa-check");
 	}
 	else {
+		if(currentOptionElement){
 		currentOptionElement.children[1].classList.add("fas", "fa-times");
-		Options[GetCurrentQuizCorrectAnswer()].children[1].classList.add("fas", "fa-check");
+		Options[GetCurrentQuizCorrectAnswer()].children[1].classList.add("fas", "fa-check");}
 	}
 }
 function HighlightCorrect(correct){
@@ -200,13 +220,36 @@ function HighlightCorrect(correct){
 		for (let i = 0; i < Options.length; i++) {
 			Options[i].classList.add("option-wrong");
 		}
-		currentOptionElement.classList.remove("option-selected");
-		Options[GetCurrentQuizCorrectAnswer()].classList.add("option-selected");
-		Options[GetCurrentQuizCorrectAnswer()].classList.replace("option-wrong", "options-correct");
+		if(currentOptionElement){
+			currentOptionElement.classList.remove("option-selected");
+			Options[GetCurrentQuizCorrectAnswer()].classList.add("option-selected");
+			Options[GetCurrentQuizCorrectAnswer()].classList.replace("option-wrong", "options-correct");
+		}else{
+			Options[GetCurrentQuizCorrectAnswer()].classList.add("option-selected");
+		}
+
 
 	}}
-function SwitchButton (toSubmit){
-	return toSubmit ? Submit.innerHTML = "Submit": Submit.innerHTML = "Next Question";
+function SwitchButton (SubmitPressed, last = false){
+	if(!last){
+		if(SubmitPressed){
+			Submit.innerHTML = "Next Question";
+			Submit.classList.contains("after-nextQuestion") ? 
+			Submit.classList.replace("after-nextQuestion","after-answer") : 
+			Submit.classList.add("after-answer");
+	
+		}
+		else{
+			Submit.innerHTML = "Submit";
+			Submit.classList.contains("after-answer")?
+			Submit.classList.replace("after-answer" ,"after-nextQuestion"):
+			Submit.classList.add("after-nextQuestion");
+		}
+	}
+	else{
+		Submit.innerHTML = "Result";
+		Submit.classList.replace("after-nextQuestion", "result");
+	}
 }
 function ResetClasses() {
 	for (let i = 0; i < Options.length; i++) {
@@ -216,24 +259,53 @@ function ResetClasses() {
 }
 
 //countdown function // checks if its a question or beforeload
-function CountDown(question, timeleft){
-    var downloadTimer = setInterval(function(){
-    timeleft--;
-    TimerContainer.children[0].textContent = timeleft;
-    if(timeleft == 0){
-		//countdown while asking a question
-		if (question) {
-			clearInterval(downloadTimer);
-			if (TimerContainer.children[0].textContent == 0) {
-				TimerContainer.children[0].textContent = "";
+function CountDown(question, reset = true, lastQuestion = false){
+	//reset the last
+	if (reset){
+	clearInterval(quizTimer);}
+
+	question ? timeLeft = 61 : timeLeft = 6;
+
+	quizTimer = setInterval(function(){
+	timeLeft--;
+	TimerContainer.children[0].textContent = timeLeft;
+	//when the time is up
+	if(timeLeft === 0){
+		//question loop
+		if(Submit.classList.contains("after-nextQuestion")){
+			if(questionIndex.length < 5){
+				SwitchButton(true);
 			}
+			//finished with last question without an answer
+			else if (questionIndex.length === 5) {
+				clearInterval(quizTimer);
+				HighlightCorrect(false);
+				CountDown(false, false, true);
+			}
+			HighlightCorrect(false);
+			CountDown(false, false);
 		}
-		else{
+		//waiting for the next question
+		else if (Submit.classList.contains("after-answer")){
 
+			if(questionIndex.length < 5){
+				questionIndex.push(GetRandomNumberNorRepeat(0,5));
+				loadQuiz();
+			}
+			CountDown(true,false);
 		}
+		if(lastQuestion){
+			//done 5 seconds waiting after last qustion
+			clearInterval(quizTimer);
+			alert("RESULT: GOOD JOB!"); // -> here comes what happens after went through the loop. -> print result
+		}
+		//stop clock
+		clearInterval(quizTimer);
+		//remove timer
+		if (TimerContainer.children[0].textContent == 0) {
+			TimerContainer.children[0].textContent = "";
+		}}},1000);}
 
-    }},1000);
-}
 //Get functions
 function GetAnswerResult(){
 	return currentOptionElement.innerText === quizData[questionIndex[questionIndex.length-1]].correct ? true : false;
