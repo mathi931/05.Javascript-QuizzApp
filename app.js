@@ -125,11 +125,12 @@ Submit.addEventListener("click", function(){
 		loadQuiz();
 		//6.button back to Submit
 		SwitchButton(false);
-		timeLeft =0;
 		ResetClasses();
 		CountDown(true);
 	}
 	else if(Submit.innerHTML === "Result"){
+		//must stop the counter
+		TimerStop();
 		alert("done");
 	}
 	else{
@@ -305,6 +306,12 @@ function CountDown(question, reset = true, lastQuestion = false){
 		if (TimerContainer.children[0].textContent == 0) {
 			TimerContainer.children[0].textContent = "";
 		}}},1000);}
+
+//stops the timer and clear the text
+function TimerStop(){
+	clearInterval(quizTimer);
+	TimerContainer.children[0].textContent = "";
+}
 
 //Get functions
 function GetAnswerResult(){
