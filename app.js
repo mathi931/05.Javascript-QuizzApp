@@ -9,6 +9,7 @@ const quizData = [
 		op4: 'Copenhagen',
 		correct: 'Oslo',
 		asked: false,
+		chosen: ""
 	},
 	{
 		id: 1,
@@ -19,6 +20,7 @@ const quizData = [
 		op4: '1938',
 		correct: '1945',
 		asked: false,
+		chosen: ""
 	},
 	{
 		id: 2,
@@ -29,6 +31,7 @@ const quizData = [
 		op4: '1',
 		correct: '5',
 		asked: false,
+		chosen: ""
 	},
 	{
 		id: 3,
@@ -40,6 +43,7 @@ const quizData = [
 		op4: 'British Airways and Iberia',
 		correct: 'American Airlines and US Airways',
 		asked: false,
+		chosen: ""
 	},
 	{
 		id: 4,
@@ -50,6 +54,7 @@ const quizData = [
 		op4: 'Finland',
 		correct: 'Finland',
 		asked: false,
+		chosen: ""
 	},
 ];
 //elements
@@ -64,10 +69,11 @@ const questionIndex = [];
 let optionI;
 // selected option element
 let currentOptionElement;
-//timer
+//follows the seconds
 let timeLeft = 0;
-
+//the timer to help cut down and reset
 let quizTimer;
+
 
 //Submit Button Click Event
 Submit.addEventListener("click", function(){
@@ -131,7 +137,7 @@ Submit.addEventListener("click", function(){
 	else if(Submit.innerHTML === "Result"){
 		//must stop the counter
 		TimerStop();
-		alert("done");
+		SetResultInAlert(GetCorrectAnswers());
 	}
 	else{
 		alert("Something is wrong bro");
@@ -258,6 +264,9 @@ function ResetClasses() {
 		Options[i].children[1].classList.remove("fas", "fa-check", "fa-times");
 	}
 }
+function SetResultInAlert(goodans){
+	alert(`You had ${goodans} correct answers out of ${quizData.length} questions`)
+}
 
 //countdown function // checks if its a question or beforeload
 function CountDown(question, reset = true, lastQuestion = false){
@@ -298,7 +307,7 @@ function CountDown(question, reset = true, lastQuestion = false){
 		if(lastQuestion){
 			//done 5 seconds waiting after last qustion
 			clearInterval(quizTimer);
-			alert("RESULT: GOOD JOB!"); // -> here comes what happens after went through the loop. -> print result
+			SetResultInAlert(GetCorrectAnswers()); // -> here comes what happens after went through the loop. -> print result
 		}
 		//stop clock
 		clearInterval(quizTimer);
@@ -315,18 +324,26 @@ function TimerStop(){
 
 //Get functions
 function GetAnswerResult(){
-	return currentOptionElement.innerText === quizData[questionIndex[questionIndex.length-1]].correct ? true : false;
+	//save the chosen option by each question
+	quizData[questionIndex[questionIndex.length-1]].chosen = currentOptionElement.innerText;
+
+	if(currentOptionElement.innerText === quizData[questionIndex[questionIndex.length-1]].correct){
+		return true;
+	}
+	else{
+		return false;
+	}
 }
 function GetCurrentQuizCorrectAnswer(){
 	var correctAnswer = quizData[questionIndex[questionIndex.length-1]].correct;
 
 	//we need the correct answer's index from the option list
-
 	for (let i = 0; i < Options.length; i++) {
 		if(Options[i].children[0].innerHTML === correctAnswer)
 		{
 			return i;
 		}
+
 	}
 }
 //random number but nor repeat to the indexArray
@@ -340,4 +357,13 @@ function GetRandomNumberNorRepeat(min, max) {
 //Returns a random number between min (inclusive) and max (exclusive)
 function GetRandomNumber(min, max) {
 return Math.floor(Math.random() * (max - min)) + min;
+}
+function GetCorrectAnswers(){
+	var goodAnswers = 0;
+	for (let i = 0; i < quizData.length; i++) {
+		if(quizData[i].chosen == quizData[i].correct){
+		goodAnswers ++;
+		}
+	}
+	return goodAnswers;
 }
